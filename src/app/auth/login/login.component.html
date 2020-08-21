@@ -1,0 +1,71 @@
+<section class="login">
+  <div class="login__content">
+    <h1>Login</h1>
+    <div class="vspacer"></div>
+    <span class="login__hint"
+      >Please enter your email and password to enter</span
+    >
+
+    <div class="vspacer"></div>
+    <form [formGroup]="loginForm" class="login__form" (ngSubmit)="onSubmit()">
+      <div class="login__input">
+        <div class="login__input__email">
+          <input
+            type="email"
+            placeholder="E-mail"
+            formControlName="email"
+            class="form__input"
+            [ngClass]="{ 'is-invalid': isSubmitted && controls.email.errors }"
+          />
+          <div
+            *ngIf="isSubmitted && controls.email.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="controls.email.errors.required">Email is required</div>
+            <div *ngIf="controls.email.errors.email">
+              Email must be a valid email address
+            </div>
+          </div>
+        </div>
+
+        <div class="vspacer"></div>
+        <div class="login__input__password">
+          <input
+            type="password"
+            placeholder="Password"
+            formControlName="email"
+            class="form__input"
+            [ngClass]="{
+              'is-invalid': isSubmitted && controls.password.errors
+            }"
+          />
+
+          <div
+            *ngIf="isSubmitted && controls.password.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="controls.password.errors.required">
+              Password is required
+            </div>
+            <div *ngIf="controls.password.errors.minlength">
+              Password must be at least 6 characters
+            </div>
+          </div>
+        </div>
+
+        <div class="vspacer"></div>
+        <button class="btn login__button mr-1">Login</button>
+      </div>
+    </form>
+
+    <div class="vspacer"></div>
+    <div class="login__register">
+      <h2>Or</h2>
+
+      <div class="vspacer"></div>
+      <button class="btn login__button register mr-1" (click)="goToRegister()">
+        Register
+      </button>
+    </div>
+  </div>
+</section>
