@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {AuthGuard} from './guards/auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 
+// We will use module's lazy loading
 const shipModule = () => import('./ships/ships.module').then(m => m.ShipsModule);
 const authModule = () => import('./auth/auth.module').then(m => m.AuthModule);
 const routes: Routes = [
