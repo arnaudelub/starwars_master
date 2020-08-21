@@ -1,0 +1,42 @@
+@import '../../../stylings/config';
+
+.register {
+    position  : relative;
+    height    : 100vh;
+    width     : 90vw;
+    padding   : $global-padding;
+    text-align: center;
+
+
+    &__button {
+        background : $gold-color;
+        width      : 80%;
+        height     : $global-item-height;
+        font-weight: 500;
+
+    }
+
+    &__content {
+        position     : absolute;
+        top          : 50vh;
+        left         : 50vw;
+        -ms-transform: translate(-50%, -50%);
+        transform    : translate(-50%, -50%);
+    }
+
+    &__input {
+
+
+        &__email {}
+    }
+}
+
+.login {
+    background: $black-color !important;
+    color     : white;
+}
+
+.form__input {
+    width : 90vw;
+    height: $global-item-height;
+}

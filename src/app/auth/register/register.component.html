@@ -1,1 +1,109 @@
-<p>register works!</p>
+<section class="register">
+  <div class="register__content">
+    <h1>Register to Starships</h1>
+    <div class="vspacer"></div>
+    <form
+      [formGroup]="registerForm"
+      class="register_form"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="register__input">
+        <div class="register__input__firstName">
+          <input
+            type="text"
+            placeholder="First Name"
+            formControlName="firstName"
+            class="form__input"
+            [ngClass]="{
+              'is-invalid': isSubmitted && controls.firstName.errors
+            }"
+          />
+          <div
+            *ngIf="isSubmitted && controls.firstName.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="controls.email.errors.required">
+              firstName is required
+            </div>
+          </div>
+        </div>
+        <div class="vspacer"></div>
+        <div class="register__input__lastName">
+          <input
+            type="text"
+            placeholder="Last Name"
+            formControlName="lastName"
+            class="form__input"
+            [ngClass]="{
+              'is-invalid': isSubmitted && controls.lastName.errors
+            }"
+          />
+          <div
+            *ngIf="isSubmitted && controls.lastName.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="controls.email.errors.required">
+              lastName is required
+            </div>
+          </div>
+        </div>
+        <div class="vspacer"></div>
+        <div class="register__input__email">
+          <input
+            type="email"
+            placeholder="E-mail"
+            formControlName="email"
+            class="form__input"
+            [ngClass]="{ 'is-invalid': isSubmitted && controls.email.errors }"
+          />
+          <div
+            *ngIf="isSubmitted && controls.email.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="controls.email.errors.required">Email is required</div>
+            <div *ngIf="controls.email.errors.pattern">
+              Email must be a valid email address
+            </div>
+          </div>
+        </div>
+
+        <div class="vspacer"></div>
+        <div class="register__input__password">
+          <input
+            type="password"
+            placeholder="Password"
+            formControlName="password"
+            class="form__input"
+            [ngClass]="{
+              'is-invalid': isSubmitted && controls.password.errors
+            }"
+          />
+
+          <div
+            *ngIf="isSubmitted && controls.password.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="controls.password.errors.required">
+              Password is required
+            </div>
+            <div *ngIf="controls.password.errors.minlength">
+              Password must be at least 6 characters
+            </div>
+          </div>
+        </div>
+
+        <div class="vspacer"></div>
+        <button class="btn register__button mr-1">Register</button>
+      </div>
+    </form>
+    <div class="vspacer"></div>
+    <div class="register__login">
+      <h2>Or</h2>
+
+      <div class="vspacer"></div>
+      <button class="btn register__button login mr-1" (click)="goToLogin()">
+        Login
+      </button>
+    </div>
+  </div>
+</section>

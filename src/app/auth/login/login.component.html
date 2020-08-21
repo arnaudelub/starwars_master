@@ -1,6 +1,6 @@
 <section class="login">
   <div class="login__content">
-    <h1>Login</h1>
+    <h1>Starships Login</h1>
     <div class="vspacer"></div>
     <span class="login__hint"
       >Please enter your email and password to enter</span
@@ -21,8 +21,10 @@
             *ngIf="isSubmitted && controls.email.errors"
             class="invalid-feedback"
           >
-            <div *ngIf="controls.email.errors.required">Email is required</div>
-            <div *ngIf="controls.email.errors.email">
+            <div *ngIf="controls.email.errors.required">
+              Email is required
+            </div>
+            <div *ngIf="controls.email.errors.pattern">
               Email must be a valid email address
             </div>
           </div>
@@ -33,7 +35,7 @@
           <input
             type="password"
             placeholder="Password"
-            formControlName="email"
+            formControlName="password"
             class="form__input"
             [ngClass]="{
               'is-invalid': isSubmitted && controls.password.errors
@@ -47,14 +49,15 @@
             <div *ngIf="controls.password.errors.required">
               Password is required
             </div>
-            <div *ngIf="controls.password.errors.minlength">
-              Password must be at least 6 characters
-            </div>
           </div>
         </div>
-
+        <div class="error__message" *ngIf="showError" [@errorAnimation]>
+          {{ errorMessage }}
+        </div>
         <div class="vspacer"></div>
-        <button class="btn login__button mr-1">Login</button>
+        <button class="btn login__button mr-1" [disabled]="isLoading">
+          Login
+        </button>
       </div>
     </form>
 

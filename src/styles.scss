@@ -2,9 +2,27 @@
 @import './stylings/config';
 
 body {
-    height: 100vh;
+    font-family: 'Darker Grotesque', sans-serif;
+    height     : 100vh;
 }
 
 .vspacer {
     height: 20px;
+}
+
+input {
+    background-color: transparent;
+    outline         : 0;
+    border-width    : 0 0 2px;
+    border-color    : rgba($black-color, 0.1);
+}
+
+input:focus {
+    border-color: $black-color;
+}
+
+.error__message {
+    color      : rgba(red, 0.7);
+    font-weight: 600;
+    margin     : auto;
 }

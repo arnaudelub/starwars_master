@@ -7,21 +7,12 @@
     padding   : $global-padding;
     text-align: center;
 
-    input {
-        background-color: transparent;
-        outline         : 0;
-        border-width    : 0 0 2px;
-        border-color    : rgba($black-color, 0.1);
-    }
-
-    input:focus {
-        border-color: $black-color;
-    }
 
     &__button {
-        background: $gold-color;
-        width     : 80%;
-        height    : $global-item-height;
+        background : $gold-color;
+        width      : 80%;
+        height     : $global-item-height;
+        font-weight: 500;
 
     }
 
