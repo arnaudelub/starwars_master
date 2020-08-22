@@ -10,7 +10,7 @@
 
     &__button {
         background : $gold-color;
-        width      : 80%;
+        width      : 90vw;
         height     : $global-item-height;
         font-weight: 500;
 
@@ -39,4 +39,42 @@
 .form__input {
     width : 90vw;
     height: $global-item-height;
+}
+
+@include media-md {
+    .register {
+        &__button {
+            width: 30vw !important;
+        }
+    }
+
+    .form__input {
+        width: 30vw !important;
+    }
+}
+
+@include media-lg {
+    .register {
+        &__button {
+            width: 20vw !important;
+        }
+    }
+
+    .form__input {
+        width: 20vw !important;
+
+    }
+}
+
+@include media-xl {
+    .register {
+        &__button {
+            width: 320px !important;
+        }
+    }
+
+    .form__input {
+        width: 320px !important;
+
+    }
 }

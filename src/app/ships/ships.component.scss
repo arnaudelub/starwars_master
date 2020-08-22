@@ -1,0 +1,18 @@
+@import '../../stylings/config';
+
+.loader {
+    position: absolute;
+    left    : 0;
+    top     : 0;
+    right   : 0;
+    bottom  : 0;
+    margin  : auto;
+}
+
+
+.loader-container {
+    position  : relative;
+    width     : 100%;
+    height    : 100%;
+    background: rgba($color:$gold-color, $alpha: .6);
+}

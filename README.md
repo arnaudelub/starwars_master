@@ -55,7 +55,7 @@ To mock the backend responses, i'm using HttpInterceptor so auth.service can be 
 ### Starting with starships part
 
 First of all, to fix the error of the _"Mas Datos"_ button, the API of swapi is giving us an URL in next and previous with SSL,
-so we just need to replace http with https in ships.service.js:
+so we just need to replace http with https in **ships.service.js**:
 
 ```javascript
     function GetStarships(url) {
@@ -79,6 +79,6 @@ so we just need to replace http with https in ships.service.js:
 
 #### Handling the Observables
 
-HttpClient get method is returning an observable, the be able to threat the response as an array of ships directly in shipComponent,
-i'm using the async pipe in shipsListComponent input. The async pipe will subscribe automatically to the Observable and return the latest value received.
-This way, i can manipulate the ships array with having to subscribe.
+_HttpClient_ get method is returning an observable, the be able to threat the response as an array of ships directly in **shipComponent**,
+i'm using the [async pipe](https://angular.io/api/common/AsyncPipe) in **shipsListComponent** input. The _async pipe_ will subscribe automatically to the Observable and return the latest value received.
+This way, i can manipulate the ships array (ships[]) without having to subscribe to it from the component.

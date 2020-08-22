@@ -1,1 +1,5 @@
-<p>ships-list works!</p>
+<ng-container *ngIf="starshipsList != []">
+  <div *ngFor="let starship of starshipsList; trackBy: trackByID">
+    <app-ship-item [ship]="starship"></app-ship-item>
+  </div>
+</ng-container>

@@ -1,0 +1,15 @@
+@import '../../../../stylings/config';
+
+.ship-item {
+    &__info {
+        padding-left: $global-padding;
+
+        &__name {
+            font-weight: 500;
+        }
+
+        &__credits {
+            font-weight: 700;
+        }
+    }
+}

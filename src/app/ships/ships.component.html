@@ -1,1 +1,10 @@
-<p>ships works!</p>
+<ng-container *ngIf="starships$ | async as swapi; else loader">
+  <app-ships-list [swapiResponse]="swapi"></app-ships-list>
+</ng-container>
+<ng-template #loader>
+  <div class="loader-container">
+    <div class="spinner-border loader" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</ng-template>

@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ShipsService {
-  baseUrl = `${environment.swapiUrl}starships`;
+  baseUrl = `${environment.swapiUrl}starships/`;
   constructor(private http: HttpClient) { }
 
   getStarship(url?) {

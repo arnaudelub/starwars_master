@@ -1,1 +1,14 @@
-<p>ship-item works!</p>
+<div class="ship-item">
+  <img [src]="ship.img" alt="" (error)="updateUrl()" width="100%" />
+  <div class="ship-item__info">
+    <span class="ship-item__info__name"> {{ ship.name }} </span><br />
+    <span
+      class="ship-item__info__credits"
+      *ngIf="!priceIsUnknown(); else noPrice"
+      >{{ ship.cost_in_credits }} <img src="assets/credit.png" alt="" />
+    </span>
+
+    <ng-template #noPrice>Call us to know the price in credits!</ng-template>
+  </div>
+</div>
+<div class="vspacer"></div>

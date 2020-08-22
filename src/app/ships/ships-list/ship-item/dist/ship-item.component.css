@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.ship-item__info {
+  padding-left: 10px;
+}
+.ship-item__info__name {
+  font-weight: 500;
+}
+.ship-item__info__credits {
+  font-weight: 700;
+}

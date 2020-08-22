@@ -7,13 +7,18 @@ const shipModule = () => import('./ships/ships.module').then(m => m.ShipsModule)
 const authModule = () => import('./auth/auth.module').then(m => m.AuthModule);
 const routes: Routes = [
   {
-    path: '',
+    path: 'ships',
     loadChildren: shipModule,
     canActivate: [AuthGuard]
   },
   {
     path: 'account',
     loadChildren: authModule,
+  },
+  {
+    path: '',
+    redirectTo: 'ships',
+    pathMatch: 'full'
   },
   { path: '**', redirectTo: '' }
 ];
