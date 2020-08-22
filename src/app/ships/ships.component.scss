@@ -26,6 +26,8 @@
     flex-direction  : row;
     justify-content : flex-end;
     align-items     : center;
+    border-bottom   : solid rgba($black-color, .1) 1px;
+    border-top      : solid rgba($black-color, .1) 1px;
 
     .searchinput {
         margin-right: auto;
@@ -43,4 +45,21 @@
         cursor         : pointer;
     }
 
+    .search-icon {
+        width       : 2rem;
+        margin-right: $global-padding;
+
+        a {
+            text-decoration: none;
+            color          : $black-color !important;
+        }
+    }
+
+}
+
+@include media-lg {
+    .ships_container {
+        width : 1024px;
+        margin: auto;
+    }
 }

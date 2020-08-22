@@ -79,6 +79,12 @@ so we just need to replace http with https in **ships.service.js**:
 
 #### Handling the Observables
 
-_HttpClient_ get method is returning an observable, the be able to threat the response as an array of ships directly in **shipComponent**,
+_HttpClient get_ method is returning an observable, the be able to threat the response as an array of ships directly in **shipComponent**,
 i'm using the [async pipe](https://angular.io/api/common/AsyncPipe) in **shipsListComponent** input. The _async pipe_ will subscribe automatically to the Observable and return the latest value received.
 This way, i can manipulate the ships array (ships[]) without having to subscribe to it from the component.
+
+#### Creation of the Ship's list
+
+We are using the trackBy directive along with the ngFor directive to iterate over the ships array.
+This way, updating the array by appending the other pages (for the infinite scroll) won't make re-rendering the
+whole DOM, but only the new nodes.

@@ -7,20 +7,20 @@ const shipModule = () => import('./ships/ships.module').then(m => m.ShipsModule)
 const authModule = () => import('./auth/auth.module').then(m => m.AuthModule);
 const routes: Routes = [
   {
-    path: 'ships',
+    path: 'starships',
     loadChildren: shipModule,
     canActivate: [AuthGuard]
   },
   {
-    path: 'account',
+    path: 'auth',
     loadChildren: authModule,
   },
   {
     path: '',
-    redirectTo: 'ships',
+    redirectTo: 'starships',
     pathMatch: 'full'
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'starships' }
 ];
 
 @NgModule({

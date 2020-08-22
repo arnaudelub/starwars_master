@@ -1,5 +1,7 @@
 <ng-container *ngIf="starshipsList != []">
-  <div *ngFor="let starship of starshipsList; trackBy: trackByID">
-    <app-ship-item [ship]="starship"></app-ship-item>
+  <div *ngFor="let starship of starshipsList; index as i; trackBy: trackByID">
+    <a (click)="goToDetails(starshipsList[i].id)">
+      <app-ship-item [ship]="starship"></app-ship-item>
+    </a>
   </div>
 </ng-container>

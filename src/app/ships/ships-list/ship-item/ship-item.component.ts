@@ -13,7 +13,6 @@ export class ShipItemComponent implements OnInit {
 
 
   ngOnInit(): void {
-    devLog(this.ship);
   }
 
   updateUrl() {

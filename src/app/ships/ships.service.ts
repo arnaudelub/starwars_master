@@ -13,6 +13,7 @@ export class ShipsService {
     if (!url) {
       url = this.baseUrl;
     }
+    url = url.replace(/^http:\/\//i, "https://");
     return this.http.get(url,
       {
         headers: new HttpHeaders({

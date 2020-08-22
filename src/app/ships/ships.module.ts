@@ -6,6 +6,7 @@ import { ShipsComponent } from './ships.component';
 import { ShipsListComponent } from './ships-list/ships-list.component';
 import { ShipItemComponent } from './ships-list/ship-item/ship-item.component';
 import { ShipDetailsComponent } from './ship-details/ship-details.component';
+import { MeComponent } from './me/me.component';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import { ShipDetailsComponent } from './ship-details/ship-details.component';
     ShipsListComponent,
     ShipItemComponent,
     ShipDetailsComponent,
+    MeComponent,
   ],
   imports: [
     CommonModule,

@@ -3,6 +3,7 @@
 .ship-item {
     &__info {
         padding-left: $global-padding;
+        padding-top : $global-padding;
 
         &__name {
             font-weight: 500;

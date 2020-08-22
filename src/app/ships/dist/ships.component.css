@@ -28,6 +28,8 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  border-bottom: solid rgba(0, 0, 0, 0.1) 1px;
+  border-top: solid rgba(0, 0, 0, 0.1) 1px;
 }
 .topnav .searchinput {
   margin-right: auto;
@@ -41,4 +43,19 @@
   text-decoration: none;
   font-size: 17px;
   cursor: pointer;
+}
+.topnav .search-icon {
+  width: 2rem;
+  margin-right: 10px;
+}
+.topnav .search-icon a {
+  text-decoration: none;
+  color: #000 !important;
+}
+
+@media screen and (min-width: 1025px) {
+  .ships_container {
+    width: 1024px;
+    margin: auto;
+  }
 }

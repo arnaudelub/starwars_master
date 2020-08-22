@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
 
     this.auth.register(this.registerForm.value).subscribe(
       next => {
-        this.router.navigate(['/account/login']);
+        this.router.navigate(['/auth/login']);
       },
       err => {
 
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
   }
 
   goToLogin() {
-    this.router.navigate(['/account/login'])
+    this.router.navigate(['/auth/login'])
   }
 
 }

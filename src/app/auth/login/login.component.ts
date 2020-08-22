@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
   }
 
   goToRegister() {
-    this.router.navigate(['/account/register']);
+    this.router.navigate(['/auth/register']);
   }
 
   showHideError() {

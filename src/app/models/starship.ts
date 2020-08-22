@@ -21,7 +21,7 @@ export interface Starship {
     img?: String,
 }
 
-export interface swapiResponse {
+export interface SwapiResponse {
     count?: number,
     next?: string,
     previous?: string,

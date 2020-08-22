@@ -10,12 +10,16 @@ export function devLog(message: any, type = types.log) {
         switch (type) {
             case types.log:
                 console.log(message);
+                break;
             case types.warn:
                 console.warn(message);
+                break;
             case types.count:
                 console.count(message);
+                break;
             case types.err:
                 console.error(message);
+                break;
         }
         console.log(message);
     }
