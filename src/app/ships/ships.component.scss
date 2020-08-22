@@ -16,3 +16,31 @@
     height    : 100%;
     background: rgba($color:$gold-color, $alpha: .6);
 }
+
+
+.topnav {
+    background-color: white;
+    overflow        : hidden;
+    height          : 3rem;
+    display         : flex;
+    flex-direction  : row;
+    justify-content : flex-end;
+    align-items     : center;
+
+    .searchinput {
+        margin-right: auto;
+    }
+
+    img {
+        width : 40px;
+        height: 40px;
+    }
+
+    a {
+        text-align     : center;
+        text-decoration: none;
+        font-size      : 17px;
+        cursor         : pointer;
+    }
+
+}

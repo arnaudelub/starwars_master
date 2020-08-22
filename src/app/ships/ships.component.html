@@ -1,3 +1,10 @@
+<div class="topnav">
+  <div class="hspacer"></div>
+  <div class="searchinput" *ngIf="isShipListRoute()">
+    <input type="text" class="form_input" placeholder="find a ship" />
+  </div>
+  <a><img src="assets/stormtrooper.png" alt="account" title="Account" /></a>
+</div>
 <ng-container *ngIf="starships$ | async as swapi; else loader">
   <app-ships-list [swapiResponse]="swapi"></app-ships-list>
 </ng-container>

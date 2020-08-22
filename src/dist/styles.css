@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Darker Grotesque", sans-serif;
+  height: 100vh;
+}
+
+.vspacer {
+  height: 20px;
+}
+
+.hspacer {
+  width: 10px;
+}
+
+input {
+  background-color: transparent;
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+input:focus {
+  border-color: #000;
+}
+
+.error__message {
+  color: rgba(255, 0, 0, 0.7);
+  font-weight: 600;
+  margin: auto;
+}
