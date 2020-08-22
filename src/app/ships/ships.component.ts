@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 
 import { ShipsService } from './ships.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, fromEvent } from 'rxjs';
 import { SwapiResponse } from '../models/starship';
 import { Router, UrlTree, Navigation, RouterStateSnapshot, NavigationEnd } from '@angular/router';
 import { devLog } from 'app/core/functions/development_logs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { showInputAnimation } from '../core/animations/show_input_animation';
 @Component({
@@ -17,7 +17,8 @@ import { showInputAnimation } from '../core/animations/show_input_animation';
   ]
 })
 
-export class ShipsComponent implements OnInit, OnDestroy {
+export class ShipsComponent implements OnInit, OnDestroy, AfterViewInit {
+  private inputSubject: Subject<String> = new Subject();
   protected starships$: Observable<SwapiResponse>;
   private currentRoute = "/starships";
   private destroyed$: Subject<boolean> = new Subject();
@@ -25,13 +26,31 @@ export class ShipsComponent implements OnInit, OnDestroy {
   public iconImage: "assets/stormtrooper.png" | "assets/close.png" = "assets/stormtrooper.png";
   public showSearchBar = true;
   public searchInputOpen = false;
+  public searchTerm: String;
+  public isSearchResult = false;
+
   constructor(private shipsService: ShipsService,
     private router: Router) {
 
   }
-  ngOnDestroy(): void {
-    this.destroyed$.next;
-    this.destroyed$.complete;
+  ngAfterViewInit(): void {
+    this.inputSubject
+      .pipe(takeUntil(this.destroyed$))
+      .pipe(debounceTime(1000))
+      .pipe(distinctUntilChanged())
+      .subscribe(
+        data => {
+          if (data == "" && !this.isSearchResult) {
+            this.router.navigate(['starships']);
+            return;
+          }
+
+          this.isSearchResult = true;
+          this.starships$ = this.shipsService.getStarshipSearch(data);
+        },
+        err => { },
+        () => console.log("complete")
+      );
   }
 
   ngOnInit(): void {
@@ -76,6 +95,19 @@ export class ShipsComponent implements OnInit, OnDestroy {
 
   showHideInput() {
     this.searchInputOpen = !this.searchInputOpen;
+  }
+
+  onChange(event) {
+    this.inputSubject.next(this.searchTerm);
+  }
+
+  searchResultReceived() {
+    this.isSearchResult = false;
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next;
+    this.destroyed$.complete;
   }
 
 }

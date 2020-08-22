@@ -14,6 +14,15 @@ export class ShipsService {
       url = this.baseUrl;
     }
     url = url.replace(/^http:\/\//i, "https://");
+    return this.getRequest(url);
+  }
+
+  getStarshipSearch(term: String) {
+    let url = this.baseUrl + `?search=${term}`;
+    return this.getRequest(url);
+  }
+
+  private getRequest(url) {
     return this.http.get(url,
       {
         headers: new HttpHeaders({

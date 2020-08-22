@@ -12,12 +12,13 @@ import { Router } from '@angular/router';
 })
 export class ShipsListComponent implements OnInit {
   @Input() swapiResponse: SwapiResponse;
-  @Output() addNewPageToList = new EventEmitter<String>();
+  @Input() isSearch: boolean;
   isLastPage = false;
   starshipsList: Starship[] = [];
   isLoading = false;
   previousMax: number;
   nextPage: String;
+  isLastItem = false;
   constructor(
     private shipService: ShipsService,
     private router: Router) { }
@@ -29,7 +30,8 @@ export class ShipsListComponent implements OnInit {
 
   mapResponseWithIdAndImage(response: Starship[]) {
     return this.swapiResponse.results.map(
-      item => {
+      (item, index) => {
+        devLog(item);
         let splittedUrl = item.url.split("/");
         item.id = +splittedUrl[splittedUrl.length - 2];
         item.img = `https://starwars-visualguide.com/assets/img/starships/${item.id}.jpg`
@@ -53,6 +55,7 @@ export class ShipsListComponent implements OnInit {
             this.starshipsList = this.starshipsList.concat(
               this.mapResponseWithIdAndImage(data.results)
             );
+            this.isLastItem = false;
             this.setNextPage(data);
           },
           err => { },
@@ -86,5 +89,6 @@ export class ShipsListComponent implements OnInit {
   goToDetails(id: number) {
     this.router.navigate([`/ship/${id}`])
   }
+
 
 }

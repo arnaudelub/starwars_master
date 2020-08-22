@@ -1,7 +1,16 @@
-<ng-container *ngIf="starshipsList != []">
+<ng-container *ngIf="starshipsList.length > 0; else emptyResult">
   <div *ngFor="let starship of starshipsList; index as i; trackBy: trackByID">
     <a (click)="goToDetails(starshipsList[i].id)">
       <app-ship-item [ship]="starship"></app-ship-item>
+      <div class="separator"></div>
+      <div class="vspacer"></div>
     </a>
   </div>
 </ng-container>
+
+<ng-template #emptyResult>
+  <div class="noresult">
+    <h1>No Result!</h1>
+    <img src="assets/noresult.png" alt="" />
+  </div>
+</ng-template>

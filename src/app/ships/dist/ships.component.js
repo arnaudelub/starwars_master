@@ -17,16 +17,29 @@ var ShipsComponent = /** @class */ (function () {
     function ShipsComponent(shipsService, router) {
         this.shipsService = shipsService;
         this.router = router;
+        this.inputSubject = new rxjs_1.Subject();
         this.currentRoute = "/starships";
         this.destroyed$ = new rxjs_1.Subject();
         this.navigateTo = "/starships/me";
         this.iconImage = "assets/stormtrooper.png";
         this.showSearchBar = true;
         this.searchInputOpen = false;
+        this.isSearchResult = false;
     }
-    ShipsComponent.prototype.ngOnDestroy = function () {
-        this.destroyed$.next;
-        this.destroyed$.complete;
+    ShipsComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        this.inputSubject
+            .pipe(operators_1.takeUntil(this.destroyed$))
+            .pipe(operators_1.debounceTime(1000))
+            .pipe(operators_1.distinctUntilChanged())
+            .subscribe(function (data) {
+            if (data == "" && !_this.isSearchResult) {
+                _this.router.navigate(['starships']);
+                return;
+            }
+            _this.isSearchResult = true;
+            _this.starships$ = _this.shipsService.getStarshipSearch(data);
+        }, function (err) { }, function () { return console.log("complete"); });
     };
     ShipsComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -62,6 +75,16 @@ var ShipsComponent = /** @class */ (function () {
     };
     ShipsComponent.prototype.showHideInput = function () {
         this.searchInputOpen = !this.searchInputOpen;
+    };
+    ShipsComponent.prototype.onChange = function (event) {
+        this.inputSubject.next(this.searchTerm);
+    };
+    ShipsComponent.prototype.searchResultReceived = function () {
+        this.isSearchResult = false;
+    };
+    ShipsComponent.prototype.ngOnDestroy = function () {
+        this.destroyed$.next;
+        this.destroyed$.complete;
     };
     ShipsComponent = __decorate([
         core_1.Component({
