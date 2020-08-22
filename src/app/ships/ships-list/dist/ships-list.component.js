@@ -17,12 +17,11 @@ var ShipsListComponent = /** @class */ (function () {
         if (this.swapiResponse.next === null) {
             this.isLastPage = true;
         }
-        this.starshipsList = this.swapiResponse.results;
-        this.starshipsList.forEach(function (item) {
+        this.starshipsList = this.swapiResponse.results.map(function (item) {
             var splittedUrl = item.url.split("/");
             item.id = +splittedUrl[splittedUrl.length - 2];
-            console.log("This is the id", item.id);
             item.img = "https://starwars-visualguide.com/assets/img/starships/" + item.id + ".jpg";
+            return item;
         });
     };
     /// With the infinite scroll, the array will update and When an array change, Angular re-render the whole DOM

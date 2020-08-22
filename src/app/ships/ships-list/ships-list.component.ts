@@ -10,21 +10,22 @@ import { map } from "rxjs/operators";
 })
 export class ShipsListComponent implements OnInit {
   @Input() swapiResponse: swapiResponse;
-  isLastPage = false;
-  starshipsList: Starship[] = [];
+  public isLastPage = false;
+  public starshipsList: Starship[] = [];
   constructor() { }
 
   ngOnInit(): void {
     if (this.swapiResponse.next === null) {
       this.isLastPage = true;
     }
-    this.starshipsList = this.swapiResponse.results;
-    this.starshipsList.forEach(item => {
-      let splittedUrl = item.url.split("/");
-      item.id = +splittedUrl[splittedUrl.length - 2];
-      console.log("This is the id", item.id);
-      item.img = `https://starwars-visualguide.com/assets/img/starships/${item.id}.jpg`
-    });
+    this.starshipsList = this.swapiResponse.results.map(
+      item => {
+        let splittedUrl = item.url.split("/");
+        item.id = +splittedUrl[splittedUrl.length - 2];
+        item.img = `https://starwars-visualguide.com/assets/img/starships/${item.id}.jpg`
+        return item;
+      }
+    );
   }
 
   /// With the infinite scroll, the array will update and When an array change, Angular re-render the whole DOM
