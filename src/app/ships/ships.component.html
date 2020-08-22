@@ -1,6 +1,9 @@
 <div class="topnav">
   <div class="hspacer"></div>
-  <ng-container *ngIf="showSearchBar">
+  <ng-template #showTitle>
+    <span class="topnav__title">Starships</span>
+  </ng-template>
+  <ng-container *ngIf="showSearchBar; else showTitle">
     <ng-container *ngIf="searchInputOpen">
       <div class="searchinput" [@easeAnimation]>
         <svg

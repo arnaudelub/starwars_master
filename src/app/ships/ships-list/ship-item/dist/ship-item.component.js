@@ -9,7 +9,8 @@ exports.__esModule = true;
 exports.ShipItemComponent = void 0;
 var core_1 = require("@angular/core");
 var ShipItemComponent = /** @class */ (function () {
-    function ShipItemComponent() {
+    function ShipItemComponent(router) {
+        this.router = router;
     }
     ShipItemComponent.prototype.ngOnInit = function () {
     };
@@ -18,6 +19,10 @@ var ShipItemComponent = /** @class */ (function () {
     };
     ShipItemComponent.prototype.priceIsUnknown = function () {
         return this.ship.cost_in_credits === 'unknown';
+    };
+    ShipItemComponent.prototype.showDetails = function () {
+        // Passing the data object using the url
+        this.router.navigate(["starships/details/", this.ship.id], { queryParams: { "ship": JSON.stringify(this.ship) } });
     };
     __decorate([
         core_1.Input()

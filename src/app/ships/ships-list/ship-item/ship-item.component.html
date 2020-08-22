@@ -1,4 +1,4 @@
-<div class="ship-item">
+<div (click)="showDetails()" class="ship-item">
   <img [src]="ship.img" alt="" (error)="updateUrl()" width="100%" />
   <div class="ship-item__info">
     <span class="ship-item__info__name"> {{ ship.name }} </span><br />

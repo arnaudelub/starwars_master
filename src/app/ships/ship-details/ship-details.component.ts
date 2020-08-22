@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ship-details',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShipDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    console.log(this.route.snapshot.queryParamMap.get('ship'));
   }
 
 }

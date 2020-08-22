@@ -55,7 +55,14 @@
         }
     }
 
+    &__title {
+        margin     : auto;
+        font-weight: bold;
+    }
+
 }
+
+
 
 @include media-lg {
     .ships_container {

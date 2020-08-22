@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit, DoCheck } from '@angular/core';
 import { Starship } from 'app/models/starship';
 import { devLog } from 'app/core/functions/development_logs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ship-item',
@@ -9,7 +10,7 @@ import { devLog } from 'app/core/functions/development_logs';
 })
 export class ShipItemComponent implements OnInit {
   @Input() ship: Starship;
-  constructor() { }
+  constructor(private router: Router) { }
 
 
   ngOnInit(): void {
@@ -21,6 +22,11 @@ export class ShipItemComponent implements OnInit {
 
   priceIsUnknown() {
     return this.ship.cost_in_credits === 'unknown';
+  }
+
+  showDetails() {
+    // Passing the data object using the url
+    this.router.navigate([`starships/details/`, this.ship.id], { queryParams: { "ship": JSON.stringify(this.ship) } });
   }
 
 }

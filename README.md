@@ -26,6 +26,47 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
+# Development
+
+## Local Environment
+
+```
+ng --version
+
+     _                      _                 ____ _     ___
+    / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
+   / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
+  / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
+ /_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
+                |___/
+
+
+Angular CLI: 10.0.7
+Node: 14.7.0
+OS: linux x64
+
+Angular: 10.0.11
+... animations, common, compiler, compiler-cli, core, forms
+... platform-browser, platform-browser-dynamic, router
+Ivy Workspace: Yes
+
+Package                           Version
+-----------------------------------------------------------
+@angular-devkit/architect         0.1000.7
+@angular-devkit/build-angular     0.1000.7
+@angular-devkit/build-optimizer   0.1000.7
+@angular-devkit/build-webpack     0.1000.7
+@angular-devkit/core              10.0.7
+@angular-devkit/schematics        10.0.7
+@angular/cli                      10.0.7
+@ngtools/webpack                  10.0.7
+@schematics/angular               10.0.7
+@schematics/update                0.1000.7
+rxjs                              6.5.5
+typescript                        3.9.7
+webpack                           4.43.0
+```
+
 ## Coding Path
 
 ### Generating the project structure
@@ -88,3 +129,33 @@ This way, i can manipulate the ships array (ships[]) without having to subscribe
 We are using the trackBy directive along with the ngFor directive to iterate over the ships array.
 This way, updating the array by appending the other pages (for the infinite scroll) won't make re-rendering the
 whole DOM, but only the new nodes.
+
+### The search Input
+
+Even if it's not part of the project, i think it's a good thing to have it implemented
+and also it doesn't require too much time to build it.
+We are using a subject which emits the ngModel everytime it changes.
+the subject allow us to use the rjxs operator debounceTime so we are subscribing only when
+the user has finished typing. After that we just have to reset the starship\$ observable with the new result and rebuild the list
+
+### The user account page
+
+It's not a menu but an action button in the nav bar that navigates to the account component.
+It can be modified to a menu later on if need.
+
+### The ship details page
+
+We have multiple options to get the details in this page.
+
+- We can use a routed page and navigate to it with a **click** directive and pass the _id_ to the url
+  - Do another call to the API to get the details
+- Navigate to the details page and pass the whole ship data to the url
+  - This way we don't have to call again the API
+- Make the details page a child of shipsComponent and pass the _ship item_ with the **Input()** property
+  - When using the click directive on the item, we can emit the ID to _ShipComponent_ using the **Output()** property
+  * rewrite the route to our need, i.e. _/starships/details/3_
+  * This way we don't need to call the API again and the url stays clean
+
+This last solution seems to be the cleanest to me. The only problem is that if the user is trying to navigate
+entering directly the url in the browser, it won't load the page.
+We should be able to fix this by calling the API if the Input() is empty
