@@ -9,12 +9,19 @@ exports.__esModule = true;
 exports.ShipDetailsComponent = void 0;
 var core_1 = require("@angular/core");
 var ShipDetailsComponent = /** @class */ (function () {
-    function ShipDetailsComponent(router, route) {
-        this.router = router;
+    function ShipDetailsComponent(shipService, route, location) {
+        this.shipService = shipService;
         this.route = route;
+        this.location = location;
     }
     ShipDetailsComponent.prototype.ngOnInit = function () {
-        console.log(this.route.snapshot.queryParamMap.get('ship'));
+        this.getShip();
+    };
+    ShipDetailsComponent.prototype.getShip = function () {
+        var _this = this;
+        var id = +this.route.snapshot.paramMap.get('id');
+        this.shipService.getStarshipDetails(id)
+            .subscribe(function (ship) { return _this.ship = ship; });
     };
     ShipDetailsComponent = __decorate([
         core_1.Component({

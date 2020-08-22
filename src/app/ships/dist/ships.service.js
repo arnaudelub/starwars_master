@@ -26,6 +26,10 @@ var ShipsService = /** @class */ (function () {
         var url = this.baseUrl + ("?search=" + term);
         return this.getRequest(url);
     };
+    ShipsService.prototype.getStarshipDetails = function (id) {
+        var url = "" + this.baseUrl + id + "/";
+        return this.getRequest(url);
+    };
     ShipsService.prototype.getRequest = function (url) {
         return this.http.get(url, {
             headers: new http_1.HttpHeaders({

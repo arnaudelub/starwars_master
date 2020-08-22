@@ -26,7 +26,7 @@ export class ShipItemComponent implements OnInit {
 
   showDetails() {
     // Passing the data object using the url
-    this.router.navigate([`starships/details/`, this.ship.id], { queryParams: { "ship": JSON.stringify(this.ship) } });
+    this.router.navigate([`starships/details/`, this.ship.id],);
   }
 
 }

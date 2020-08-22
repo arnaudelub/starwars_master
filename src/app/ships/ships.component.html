@@ -28,7 +28,7 @@
           (ngModelChange)="onChange($event)"
           type="text"
           class="form_input"
-          placeholder="Tell us what you are looking for"
+          placeholder="Search for a ship"
         />
       </div>
     </ng-container>
@@ -46,7 +46,7 @@
       </svg>
     </a>
   </ng-container>
-  <a [routerLink]="[navigateTo]"
+  <a (click)="navigate()"
     ><img [src]="iconImage" alt="account" title="My Account"
   /></a>
 </div>

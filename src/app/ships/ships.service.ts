@@ -22,6 +22,11 @@ export class ShipsService {
     return this.getRequest(url);
   }
 
+  getStarshipDetails(id: number) {
+    let url = `${this.baseUrl}${id}/`;
+    return this.getRequest(url);
+  }
+
   private getRequest(url) {
     return this.http.get(url,
       {

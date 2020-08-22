@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-
+import { Location } from '@angular/common';
 import { ShipsService } from './ships.service';
 import { Observable, Subject, fromEvent } from 'rxjs';
 import { SwapiResponse } from '../models/starship';
@@ -29,8 +29,10 @@ export class ShipsComponent implements OnInit, OnDestroy, AfterViewInit {
   public searchTerm: String;
   public isSearchResult = false;
 
-  constructor(private shipsService: ShipsService,
-    private router: Router) {
+  constructor(
+    private shipsService: ShipsService,
+    private router: Router,
+    private location: Location) {
 
   }
   ngAfterViewInit(): void {
@@ -55,7 +57,7 @@ export class ShipsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.router.events.pipe(
-      takeUntil(this.destroyed$)
+      takeUntil(this.destroyed$) // to avoid memory leak
     ).subscribe(
       state => {
         if (state instanceof NavigationEnd) {
@@ -103,6 +105,14 @@ export class ShipsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   searchResultReceived() {
     this.isSearchResult = false;
+  }
+
+  navigate() {
+    if (this.iconImage === "assets/close.png") {
+      this.location.back();
+    } else {
+      this.router.navigate([this.navigateTo]);
+    }
   }
 
   ngOnDestroy(): void {

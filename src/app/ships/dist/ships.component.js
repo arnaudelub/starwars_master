@@ -14,9 +14,10 @@ var development_logs_1 = require("app/core/functions/development_logs");
 var operators_1 = require("rxjs/operators");
 var show_input_animation_1 = require("../core/animations/show_input_animation");
 var ShipsComponent = /** @class */ (function () {
-    function ShipsComponent(shipsService, router) {
+    function ShipsComponent(shipsService, router, location) {
         this.shipsService = shipsService;
         this.router = router;
+        this.location = location;
         this.inputSubject = new rxjs_1.Subject();
         this.currentRoute = "/starships";
         this.destroyed$ = new rxjs_1.Subject();
@@ -43,7 +44,8 @@ var ShipsComponent = /** @class */ (function () {
     };
     ShipsComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.router.events.pipe(operators_1.takeUntil(this.destroyed$)).subscribe(function (state) {
+        this.router.events.pipe(operators_1.takeUntil(this.destroyed$) // to avoid memory leak
+        ).subscribe(function (state) {
             if (state instanceof router_1.NavigationEnd) {
                 _this.currentRoute = state.url;
                 _this.setFromRoute();
@@ -81,6 +83,14 @@ var ShipsComponent = /** @class */ (function () {
     };
     ShipsComponent.prototype.searchResultReceived = function () {
         this.isSearchResult = false;
+    };
+    ShipsComponent.prototype.navigate = function () {
+        if (this.iconImage === "assets/close.png") {
+            this.location.back();
+        }
+        else {
+            this.router.navigate([this.navigateTo]);
+        }
     };
     ShipsComponent.prototype.ngOnDestroy = function () {
         this.destroyed$.next;

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { ShipsService } from '../ships.service';
+import { Starship } from 'app/models/starship';
 
 @Component({
   selector: 'app-ship-details',
@@ -8,10 +11,23 @@ import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular
 })
 export class ShipDetailsComponent implements OnInit {
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  ship: Starship;
+  constructor(
+    private shipService: ShipsService,
+    private route: ActivatedRoute,
+    private location: Location) { }
 
   ngOnInit(): void {
-    console.log(this.route.snapshot.queryParamMap.get('ship'));
+    this.getShip();
   }
+
+  getShip() {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.shipService.getStarshipDetails(id)
+      .subscribe(
+        ship => this.ship = ship
+      );
+  }
+
 
 }

@@ -22,7 +22,7 @@ var ShipItemComponent = /** @class */ (function () {
     };
     ShipItemComponent.prototype.showDetails = function () {
         // Passing the data object using the url
-        this.router.navigate(["starships/details/", this.ship.id], { queryParams: { "ship": JSON.stringify(this.ship) } });
+        this.router.navigate(["starships/details/", this.ship.id]);
     };
     __decorate([
         core_1.Input()
