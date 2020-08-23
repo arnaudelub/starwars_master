@@ -183,6 +183,14 @@ To fix this behavior, we need to use [**take(1)**](https://www.learnrxjs.io/lear
 The last part will be to decide how to advise the user that there is new set of data available, a toast may be a good solution, it's discrete.
 
 
+# Final comments
+
+This project can be found here just in case you have any trouble using ng serve:
+* [**Production verions**](https://idelub.com/starships) builded using command ```ng build --prod --base-href /starships/```
+* [**Development version**](https://idelub.com/starships/dev) builded using command ```ng build --base-href /starship/dev/```
+  
+Also, the argument **{ useHash}: true** has been add to RouterModule.forRoot i'm using lighttpd for my web server, so .htaccess is not available.
+
 
 
 
