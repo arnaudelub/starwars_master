@@ -9,6 +9,7 @@
 
 
     &__button {
+        color      : white;
         background : $gold-color;
         width      : 90vw;
         height     : $global-item-height;
@@ -44,24 +45,24 @@
 @include media-md {
     .register {
         &__button {
-            width: 30vw !important;
+            width: 50vw !important;
         }
     }
 
     .form__input {
-        width: 30vw !important;
+        width: 50vw !important;
     }
 }
 
 @include media-lg {
     .register {
         &__button {
-            width: 20vw !important;
+            width: 40vw !important;
         }
     }
 
     .form__input {
-        width: 20vw !important;
+        width: 40vw !important;
 
     }
 }

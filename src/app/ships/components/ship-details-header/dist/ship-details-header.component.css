@@ -4,6 +4,11 @@
   padding: 0;
 }
 
+.btn {
+  border-radius: 0;
+  font-weight: 600 !important;
+}
+
 .ship-details__header__img {
   width: 100%;
 }
@@ -50,9 +55,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
   }
   .in-row .ship-details__header__img {
-    width: 50%;
+    max-height: 400px;
+    max-width: 50%;
   }
   .in-row .ship-details__header__info {
     padding: 0;

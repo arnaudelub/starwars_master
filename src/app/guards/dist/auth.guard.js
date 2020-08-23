@@ -17,7 +17,8 @@ var AuthGuard = /** @class */ (function () {
      * before accessing the ship list component
     */
     AuthGuard.prototype.canActivate = function (next, state) {
-        if (this.userService.user) {
+        var user = this.userService.currentUser;
+        if (user) {
             return true;
         }
         this.router.navigate(['/auth/login']).then(function (r) { return null; });
