@@ -18,12 +18,13 @@ import { showInputAnimation } from '../core/animations/show_input_animation';
 })
 
 export class ShipsComponent implements OnInit, AfterViewInit, OnDestroy {
-  protected starships$: Observable<SwapiResponse>;
 
   private inputSubject: Subject<String> = new Subject();
   private updated$ = new Subject();
   private currentRoute = "/starships";
   private destroyed$: Subject<boolean> = new Subject();
+
+  protected starships$: Observable<SwapiResponse>;
 
   public notificationToggle$: Observable<boolean>;
   public navigateTo: "/starships/me" | "/starships" = "/starships/me";
@@ -39,6 +40,7 @@ export class ShipsComponent implements OnInit, AfterViewInit, OnDestroy {
     private location: Location) {
 
   }
+
   ngAfterViewInit(): void {
     this.subscribeToInputSubject();
   }

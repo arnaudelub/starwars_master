@@ -21,9 +21,12 @@ var ShipsService = /** @class */ (function () {
         this.baseUrl = environment_1.environment.swapiUrl + "starships/";
         this.endpoint = 'starships';
     }
-    ShipsService.prototype.setEndpoint = function (endpoint) {
-        if (endpoint === void 0) { endpoint = 'starships'; }
-        this.baseUrl = "" + this.uri + endpoint + "/";
+    ShipsService.prototype.getRequest = function (url) {
+        return this.http.get(url, {
+            headers: new http_1.HttpHeaders({
+                'Authorization': 'none'
+            })
+        });
     };
     Object.defineProperty(ShipsService.prototype, "ships", {
         get: function () {
@@ -35,6 +38,10 @@ var ShipsService = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    ShipsService.prototype.setEndpoint = function (endpoint) {
+        if (endpoint === void 0) { endpoint = 'starships'; }
+        this.baseUrl = "" + this.uri + endpoint + "/";
+    };
     ShipsService.prototype.getStarship = function (url) {
         var _this = this;
         var timer$ = rxjs_1.timer(0, INTERVAL);
@@ -53,13 +60,6 @@ var ShipsService = /** @class */ (function () {
         var timer$ = rxjs_1.timer(0, INTERVAL);
         var url = "" + this.baseUrl + id + "/";
         return timer$.pipe(operators_1.switchMap(function () { return _this.getRequest(url); }), operators_1.shareReplay(BUFFER_SIZE));
-    };
-    ShipsService.prototype.getRequest = function (url) {
-        return this.http.get(url, {
-            headers: new http_1.HttpHeaders({
-                'Authorization': 'none'
-            })
-        });
     };
     ShipsService = __decorate([
         core_1.Injectable({

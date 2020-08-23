@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { emailPattern } from 'app/core/patterns';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -12,6 +13,7 @@ export class RegisterComponent implements OnInit {
   isSubmitted = false;
   registerForm: FormGroup;
   isLoading = false;
+
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private auth: AuthService) { }

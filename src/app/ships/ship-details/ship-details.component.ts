@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ShipsService } from '../ships.service';
 import { Starship } from 'app/models/starship';
-import { takeUntil, tap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
@@ -18,6 +18,7 @@ export class ShipDetailsComponent implements OnInit, OnDestroy {
   ship: Starship;
   fakeData: String[] = []; // remove this for production
   counter: number = 1; // can be removed too for production
+
   constructor(
     private shipService: ShipsService,
     private route: ActivatedRoute,
@@ -25,6 +26,12 @@ export class ShipDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getShip();
+  }
+
+  private addImage() {
+    let splittedUrl = this.ship.url.split("/");
+    this.ship.id = +splittedUrl[splittedUrl.length - 2];
+    this.ship.img = `https://starwars-visualguide.com/assets/img/starships/${this.ship.id}.jpg`
   }
 
   /* This is for demonstration purpose only
@@ -53,11 +60,6 @@ export class ShipDetailsComponent implements OnInit, OnDestroy {
           this.mockNewData(); // Remove for production
         },
       );
-  }
-  private addImage() {
-    let splittedUrl = this.ship.url.split("/");
-    this.ship.id = +splittedUrl[splittedUrl.length - 2];
-    this.ship.img = `https://starwars-visualguide.com/assets/img/starships/${this.ship.id}.jpg`
   }
 
   ngOnDestroy(): void {

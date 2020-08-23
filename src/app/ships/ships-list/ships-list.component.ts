@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, HostListener, Output, EventEmitter } from '@angular/core';
 import { SwapiResponse, Starship } from 'app/models/starship';
-import { devLog } from 'app/core/functions/development_logs';
-import { map, take } from "rxjs/operators";
+import { take } from "rxjs/operators";
 import { ShipsService } from '../ships.service';
 import { Router } from '@angular/router';
 
@@ -19,6 +18,7 @@ export class ShipsListComponent implements OnInit {
   previousMax: number;
   nextPage: String;
   isLastItem = false;
+
   constructor(
     private shipService: ShipsService,
     private router: Router) { }

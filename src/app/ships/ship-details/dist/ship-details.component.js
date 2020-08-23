@@ -23,6 +23,11 @@ var ShipDetailsComponent = /** @class */ (function () {
     ShipDetailsComponent.prototype.ngOnInit = function () {
         this.getShip();
     };
+    ShipDetailsComponent.prototype.addImage = function () {
+        var splittedUrl = this.ship.url.split("/");
+        this.ship.id = +splittedUrl[splittedUrl.length - 2];
+        this.ship.img = "https://starwars-visualguide.com/assets/img/starships/" + this.ship.id + ".jpg";
+    };
     /* This is for demonstration purpose only
      * Do not use in production
      */
@@ -46,11 +51,6 @@ var ShipDetailsComponent = /** @class */ (function () {
             _this.addImage();
             _this.mockNewData(); // Remove for production
         });
-    };
-    ShipDetailsComponent.prototype.addImage = function () {
-        var splittedUrl = this.ship.url.split("/");
-        this.ship.id = +splittedUrl[splittedUrl.length - 2];
-        this.ship.img = "https://starwars-visualguide.com/assets/img/starships/" + this.ship.id + ".jpg";
     };
     ShipDetailsComponent.prototype.ngOnDestroy = function () {
         this.destroyed$.next();

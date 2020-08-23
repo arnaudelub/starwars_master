@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Starship, SwapiResponse } from 'app/models/starship';
-import { shareReplay, switchMap, share } from 'rxjs/operators';
-import { devLog } from 'app/core/functions/development_logs';
+import { SwapiResponse } from 'app/models/starship';
+import { shareReplay, switchMap } from 'rxjs/operators';
 import { timer, Observable } from 'rxjs';
 
 const BUFFER_SIZE = 1;
@@ -17,11 +16,15 @@ export class ShipsService {
   uri = `${environment.swapiUrl}`;
   baseUrl = `${environment.swapiUrl}starships/`;
   endpoint: 'starships' | 'people' | 'films' = 'starships';
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
-  setEndpoint(endpoint: 'starships' | 'people' | 'films' = 'starships') {
-    this.baseUrl = `${this.uri}${endpoint}/`;
+  private getRequest(url) {
+    return this.http.get(url,
+      {
+        headers: new HttpHeaders({
+          'Authorization': 'none'
+        })
+      });
   }
 
   public get ships() {
@@ -29,6 +32,10 @@ export class ShipsService {
       this.cache$ = this.getStarship();
     }
     return this.cache$;
+  }
+
+  setEndpoint(endpoint: 'starships' | 'people' | 'films' = 'starships') {
+    this.baseUrl = `${this.uri}${endpoint}/`;
   }
 
   getStarship(url?): Observable<SwapiResponse> {
@@ -56,12 +63,5 @@ export class ShipsService {
       shareReplay(BUFFER_SIZE));
   }
 
-  private getRequest(url) {
-    return this.http.get(url,
-      {
-        headers: new HttpHeaders({
-          'Authorization': 'none'
-        })
-      });
-  }
+
 }

@@ -41,6 +41,19 @@ var ShipDetailsHeaderComponent = /** @class */ (function () {
             return;
         this.ship.films.forEach(function (film) { return _this.getFilmDetails(film); });
     };
+    ShipDetailsHeaderComponent.prototype.parseResponse = function (url, type) {
+        var _this = this;
+        this.shipService.getStarship(url)
+            .pipe(operators_1.take(1))
+            .subscribe(function (data) {
+            if (type === requestType.film) {
+                _this.filmNames.push(data['title']);
+            }
+            else {
+                _this.peopleNames.push(data['name']);
+            }
+        }, function (err) { }, function () { return _this.shipService.setEndpoint('starships'); });
+    };
     ShipDetailsHeaderComponent.prototype.priceIsUnknown = function () {
         return this.ship.cost_in_credits === 'unknown';
     };
@@ -58,19 +71,6 @@ var ShipDetailsHeaderComponent = /** @class */ (function () {
     ShipDetailsHeaderComponent.prototype.getPilotDetails = function (url) {
         this.shipService.setEndpoint('people');
         this.parseResponse(url, requestType.people);
-    };
-    ShipDetailsHeaderComponent.prototype.parseResponse = function (url, type) {
-        var _this = this;
-        this.shipService.getStarship(url)
-            .pipe(operators_1.take(1))
-            .subscribe(function (data) {
-            if (type === requestType.film) {
-                _this.filmNames.push(data['title']);
-            }
-            else {
-                _this.peopleNames.push(data['name']);
-            }
-        }, function (err) { }, function () { return _this.shipService.setEndpoint('starships'); });
     };
     __decorate([
         core_1.Input()

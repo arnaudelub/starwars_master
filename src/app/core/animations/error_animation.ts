@@ -1,4 +1,4 @@
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 export const errorAnimation = trigger(
     'errorAnimation',

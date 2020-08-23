@@ -36,7 +36,6 @@ var LoginComponent = /** @class */ (function () {
     });
     LoginComponent.prototype.onSubmit = function () {
         var _this = this;
-        development_logs_1.devLog("Submitting form ");
         this.isSubmitted = true;
         this.isLoading = true;
         if (this.loginForm.invalid) {

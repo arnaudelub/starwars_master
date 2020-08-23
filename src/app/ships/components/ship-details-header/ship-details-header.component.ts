@@ -45,7 +45,22 @@ export class ShipDetailsHeaderComponent implements OnInit {
     );
   }
 
+  private parseResponse(url: String, type: requestType) {
 
+    this.shipService.getStarship(url)
+      .pipe(take(1))
+      .subscribe(
+        data => {
+          if (type === requestType.film) {
+            this.filmNames.push(data['title'])
+          } else {
+            this.peopleNames.push(data['name'])
+          }
+        },
+        err => { },
+        () => this.shipService.setEndpoint('starships')
+      )
+  }
 
   priceIsUnknown() {
     return this.ship.cost_in_credits === 'unknown';
@@ -70,20 +85,4 @@ export class ShipDetailsHeaderComponent implements OnInit {
     this.parseResponse(url, requestType.people);
   }
 
-  private parseResponse(url: String, type: requestType) {
-
-    this.shipService.getStarship(url)
-      .pipe(take(1))
-      .subscribe(
-        data => {
-          if (type === requestType.film) {
-            this.filmNames.push(data['title'])
-          } else {
-            this.peopleNames.push(data['name'])
-          }
-        },
-        err => { },
-        () => this.shipService.setEndpoint('starships')
-      )
-  }
 }
