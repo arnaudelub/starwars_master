@@ -69,7 +69,6 @@ export class ShipsComponent implements OnInit, AfterViewInit, OnDestroy {
       takeUntil(this.destroyed$) // to avoid memory leak
     ).subscribe(
       state => {
-        console.log("New state: ", state)
         if (state instanceof NavigationEnd) {
           this.currentRoute = state.url;
           this.setFromRoute();

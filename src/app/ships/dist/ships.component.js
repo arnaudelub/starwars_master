@@ -48,7 +48,6 @@ var ShipsComponent = /** @class */ (function () {
         var _this = this;
         this.router.events.pipe(operators_1.takeUntil(this.destroyed$) // to avoid memory leak
         ).subscribe(function (state) {
-            console.log("New state: ", state);
             if (state instanceof router_1.NavigationEnd) {
                 _this.currentRoute = state.url;
                 _this.setFromRoute();
