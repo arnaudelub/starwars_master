@@ -43,8 +43,9 @@ var ShipDetailsComponent = /** @class */ (function () {
             .pipe(operators_1.takeUntil(this.destroyed$))
             .subscribe(function (ship) {
             _this.ship = ship;
+            _this.addImage();
             _this.mockNewData(); // Remove for production
-        }, function (err) { return null; }, function () { return _this.addImage(); });
+        });
     };
     ShipDetailsComponent.prototype.addImage = function () {
         var splittedUrl = this.ship.url.split("/");

@@ -48,11 +48,10 @@ export class ShipDetailsComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         ship => {
-          this.ship = ship
-          this.mockNewData() // Remove for production
+          this.ship = ship;
+          this.addImage();
+          this.mockNewData(); // Remove for production
         },
-        err => null,
-        () => this.addImage()
       );
   }
   private addImage() {

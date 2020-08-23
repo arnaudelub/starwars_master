@@ -44,6 +44,8 @@ export class ShipsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.currentRoute = this.router.url;
+    this.setFromRoute();
     this.subscribeToRouterEvents();
 
     const shipsAtFirstLoad = this.getShipsOnce();
@@ -67,6 +69,7 @@ export class ShipsComponent implements OnInit, AfterViewInit, OnDestroy {
       takeUntil(this.destroyed$) // to avoid memory leak
     ).subscribe(
       state => {
+        console.log("New state: ", state)
         if (state instanceof NavigationEnd) {
           this.currentRoute = state.url;
           this.setFromRoute();
