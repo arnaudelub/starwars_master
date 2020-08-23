@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 exports.__esModule = true;
 exports.ShipsListComponent = void 0;
 var core_1 = require("@angular/core");
-var development_logs_1 = require("app/core/functions/development_logs");
 var operators_1 = require("rxjs/operators");
 var ShipsListComponent = /** @class */ (function () {
     function ShipsListComponent(shipService, router) {
@@ -24,8 +23,7 @@ var ShipsListComponent = /** @class */ (function () {
         this.nextPage = this.swapiResponse.next;
     };
     ShipsListComponent.prototype.mapResponseWithIdAndImage = function (response) {
-        return this.swapiResponse.results.map(function (item, index) {
-            development_logs_1.devLog(item);
+        return response.map(function (item, index) {
             var splittedUrl = item.url.split("/");
             item.id = +splittedUrl[splittedUrl.length - 2];
             item.img = "https://starwars-visualguide.com/assets/img/starships/" + item.id + ".jpg";
@@ -39,13 +37,11 @@ var ShipsListComponent = /** @class */ (function () {
         // pos/max will give you the distance between scroll bottom and and bottom of screen in percentage.
         if (pos > max - 400) {
             if (!this.isLoading && this.starshipsList.length <= this.swapiResponse.count) {
-                console.log("Getting new page.....", this.nextPage);
                 this.shipService.getStarship(this.swapiResponse.next).pipe(operators_1.take(1)).subscribe(function (data) {
                     _this.starshipsList = _this.starshipsList.concat(_this.mapResponseWithIdAndImage(data.results));
                     _this.isLastItem = false;
                     _this.setNextPage(data);
                 }, function (err) { }, function () {
-                    console.log("Completed");
                     _this.previousMax = max;
                 });
                 this.isLoading = true;

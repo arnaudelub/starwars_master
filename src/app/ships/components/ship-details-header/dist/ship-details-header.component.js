@@ -9,6 +9,7 @@ exports.__esModule = true;
 exports.ShipDetailsHeaderComponent = void 0;
 var core_1 = require("@angular/core");
 var container_animation_1 = require("../../../core/animations/container_animation");
+var operators_1 = require("rxjs/operators");
 var requestType;
 (function (requestType) {
     requestType[requestType["film"] = 0] = "film";
@@ -22,8 +23,6 @@ var ShipDetailsHeaderComponent = /** @class */ (function () {
         this.filmNames = [];
         this.peopleNames = [];
     }
-    ShipDetailsHeaderComponent.prototype.ngDoCheck = function () {
-    };
     ShipDetailsHeaderComponent.prototype.ngOnInit = function () {
         if (this.isDetailsPage) {
             this.getFilms();
@@ -46,7 +45,6 @@ var ShipDetailsHeaderComponent = /** @class */ (function () {
         return this.ship.cost_in_credits === 'unknown';
     };
     ShipDetailsHeaderComponent.prototype.updateUrl = function () {
-        console.log(this.ship);
         this.ship.img = "assets/nostarships.png";
     };
     ShipDetailsHeaderComponent.prototype.toggleDetails = function () {
@@ -64,6 +62,7 @@ var ShipDetailsHeaderComponent = /** @class */ (function () {
     ShipDetailsHeaderComponent.prototype.parseResponse = function (url, type) {
         var _this = this;
         this.shipService.getStarship(url)
+            .pipe(operators_1.take(1))
             .subscribe(function (data) {
             if (type === requestType.film) {
                 _this.filmNames.push(data['title']);

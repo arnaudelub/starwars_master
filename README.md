@@ -93,6 +93,7 @@ While coding the login template and not knowing if i should go with angular-mate
 for the modernizing point of the **README** and make it close to Massimo Dutti's design.
 
 To mock the backend responses, i'm using HttpInterceptor so auth.service can be use the same way whether we are in development or production
+Duplicated email
 
 ### Starting with starships part
 
@@ -160,3 +161,30 @@ We have multiple options to get the details in this page.
 This last solution seems to be the cleanest to me. The only problem is that if the user is trying to navigate
 entering directly the url in the browser, it won't load the page.
 We should be able to fix this by calling the API if the Input() is empty
+
+
+### Handling Cache
+
+We have multiple option to do that, 
+* We could use the [**RXJS tap operator**](https://www.learnrxjs.io/learn-rxjs/operators/utility/do) ato store the data in a property of shipService and check if it's empty
+before doing the request to API.
+* The other solution is to use [**RXJS shareReplay operator**](https://www.learnrxjs.io/learn-rxjs/operators/multicasting/sharereplay) which will replay the last emitted value.
+
+In both cases, we will have to handle the fact the if the data in the backend changes, we won't be able to
+see those modifications/update in the UI.
+To resolve this situation, one of the solution would be to use a [**timer**](https://www.learnrxjs.io/learn-rxjs/operators/creation/timer).
+**timer** allow us to give an initialDelay to make sure the very first request is done a T(0). Then the interval I will be the period of our choice.
+Then we'll have to subscribe to every get request and unsubscribe once done. We also need to be sure to take the very last result of the last subsciption.
+Imagine that we are receiving the result of the request _X-1_ after the request _X_ because of some incident during the request _X-1_. In this case, 
+we want to be sure that the result emitted is the result _X_ which hold the newest set of data. For this purpose, i.e. avoiding _race conditions_ and unsubscribing to the previous Observable, **rxjs** 
+offers us [**switchMap**](https://www.learnrxjs.io/learn-rxjs/operators/transformation/switchmap).
+At this stage of this implementation, the UI will be reload with the new data after every interval of time I. This can be bad for the user as may be reloaded will watching a concrete ship.
+To fix this behavior, we need to use [**take(1)**](https://www.learnrxjs.io/learn-rxjs/operators/filtering/take) on our observable in the component. The observable will emit only one result and then it will complete.
+The last part will be to decide how to advise the user that there is new set of data available, a toast may be a good solution, it's discrete.
+
+
+
+
+
+
+

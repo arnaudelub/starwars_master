@@ -3,4 +3,11 @@
     [ship]="ship"
     [isDetailsPage]="true"
   ></app-ship-details-header>
+
+  <!-- remove this part for production-->
+  <ng-container *ngIf="isDevelopment()">
+    <div class="fakedata" *ngFor="let data of fakeData">
+      {{ data }}
+    </div>
+  </ng-container>
 </div>

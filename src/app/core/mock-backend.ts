@@ -2,7 +2,6 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse } fr
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { User } from 'app/models/user';
-import { devLog } from './functions/development_logs';
 
 
 /// To mock the backend, we have multiple solution,
@@ -55,6 +54,9 @@ export class MockBackend implements HttpInterceptor {
         function register() {
             const user = body;
             user.id = users.length ? users.length - 1 : 1;
+            if (users.find(x => x.email === user.email)) {
+                throwError(`email ${user.email} already taken`);
+            }
             users.push(user);
             localStorage.setItem('users', JSON.stringify(users));
             return ok();

@@ -60,7 +60,6 @@
       <app-ships-list
         [isSearch]="isSearchResult"
         [swapiResponse]="swapi"
-        (addNewPageToList)="getStarshipsAtPage($event)"
       ></app-ships-list>
     </div>
   </ng-container>
@@ -72,3 +71,11 @@
     </div>
   </div>
 </ng-template>
+<div
+  class="snackbar"
+  [ngClass]="{ visible: notificationToggle$ | async }"
+  *ngIf="isShipListRoute()"
+>
+  <span>There are new ships in our catalog.</span>
+  <button class="btn update_button" (click)="updateList()">Update</button>
+</div>

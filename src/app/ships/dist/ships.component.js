@@ -19,6 +19,7 @@ var ShipsComponent = /** @class */ (function () {
         this.router = router;
         this.location = location;
         this.inputSubject = new rxjs_1.Subject();
+        this.updated$ = new rxjs_1.Subject();
         this.currentRoute = "/starships";
         this.destroyed$ = new rxjs_1.Subject();
         this.navigateTo = "/starships/me";
@@ -28,10 +29,36 @@ var ShipsComponent = /** @class */ (function () {
         this.isSearchResult = false;
     }
     ShipsComponent.prototype.ngAfterViewInit = function () {
+        this.subscribeToInputSubject();
+    };
+    ShipsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.subscribeToRouterEvents();
+        var shipsAtFirstLoad = this.getShipsOnce();
+        var updates$ = this.updated$.pipe(operators_1.mergeMap(function () { return _this.getShipsOnce(); }));
+        this.starships$ = this.getShipsOnce();
+        var firstNofication$ = this.shipsService.ships.pipe(operators_1.skip(1)); // We don't want to notify at first load => skip(1)
+        var open$ = firstNofication$.pipe(operators_1.mapTo(true));
+        var close$ = this.updated$.pipe(operators_1.mapTo(false));
+        this.notificationToggle$ = rxjs_1.merge(open$, close$);
+    };
+    ShipsComponent.prototype.subscribeToRouterEvents = function () {
+        var _this = this;
+        this.router.events.pipe(operators_1.takeUntil(this.destroyed$) // to avoid memory leak
+        ).subscribe(function (state) {
+            if (state instanceof router_1.NavigationEnd) {
+                _this.currentRoute = state.url;
+                _this.setFromRoute();
+            }
+        }, function (err) { }, function () {
+            development_logs_1.devLog("Router subsciption completed");
+        });
+    };
+    ShipsComponent.prototype.subscribeToInputSubject = function () {
         var _this = this;
         this.inputSubject
             .pipe(operators_1.takeUntil(this.destroyed$))
-            .pipe(operators_1.debounceTime(1000))
+            .pipe(operators_1.debounceTime(999))
             .pipe(operators_1.distinctUntilChanged())
             .subscribe(function (data) {
             if (data == "" && !_this.isSearchResult) {
@@ -39,26 +66,11 @@ var ShipsComponent = /** @class */ (function () {
                 return;
             }
             _this.isSearchResult = true;
-            _this.starships$ = _this.shipsService.getStarshipSearch(data);
+            _this.starships$ = _this.shipsService.getStarshipSearch(data).pipe(operators_1.take(1));
         }, function (err) { }, function () { return console.log("complete"); });
     };
-    ShipsComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.router.events.pipe(operators_1.takeUntil(this.destroyed$) // to avoid memory leak
-        ).subscribe(function (state) {
-            if (state instanceof router_1.NavigationEnd) {
-                _this.currentRoute = state.url;
-                _this.setFromRoute();
-                development_logs_1.devLog(state.url);
-            }
-        }, function (err) { }, function () {
-            development_logs_1.devLog("Router subsciption completed");
-        });
-        this.starships$ = this.shipsService.getStarship();
-    };
-    ShipsComponent.prototype.getStarshipsAtPage = function (url) {
-        console.log("Loading url: ", url);
-        this.starships$ = this.shipsService.getStarship(url);
+    ShipsComponent.prototype.getShipsOnce = function () {
+        return this.shipsService.getStarship().pipe(operators_1.take(1));
     };
     ShipsComponent.prototype.setFromRoute = function () {
         if (this.currentRoute === "/starships") {
@@ -91,6 +103,9 @@ var ShipsComponent = /** @class */ (function () {
         else {
             this.router.navigate([this.navigateTo]);
         }
+    };
+    ShipsComponent.prototype.updateList = function () {
+        this.updated$.next();
     };
     ShipsComponent.prototype.ngOnDestroy = function () {
         this.destroyed$.next;

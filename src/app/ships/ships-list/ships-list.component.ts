@@ -29,9 +29,8 @@ export class ShipsListComponent implements OnInit {
   }
 
   private mapResponseWithIdAndImage(response: Starship[]) {
-    return this.swapiResponse.results.map(
+    return response.map(
       (item, index) => {
-        devLog(item);
         let splittedUrl = item.url.split("/");
         item.id = +splittedUrl[splittedUrl.length - 2];
         item.img = `https://starwars-visualguide.com/assets/img/starships/${item.id}.jpg`
@@ -47,7 +46,6 @@ export class ShipsListComponent implements OnInit {
     // pos/max will give you the distance between scroll bottom and and bottom of screen in percentage.
     if (pos > max - 400) {
       if (!this.isLoading && this.starshipsList.length <= this.swapiResponse.count) {
-        console.log("Getting new page.....", this.nextPage);
         this.shipService.getStarship(this.swapiResponse.next).pipe(
           take(1)
         ).subscribe(
@@ -60,7 +58,6 @@ export class ShipsListComponent implements OnInit {
           },
           err => { },
           () => {
-            console.log("Completed");
             this.previousMax = max;
           }
         );

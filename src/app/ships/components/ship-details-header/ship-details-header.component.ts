@@ -2,6 +2,7 @@ import { Component, OnInit, Input, AfterViewInit, DoCheck } from '@angular/core'
 import { Starship } from 'app/models/starship';
 import { containerAnimation } from '../../../core/animations/container_animation';
 import { ShipsService } from 'app/ships/ships.service';
+import { take } from 'rxjs/operators';
 
 enum requestType { film, people }
 @Component({
@@ -12,7 +13,7 @@ enum requestType { film, people }
     containerAnimation
   ]
 })
-export class ShipDetailsHeaderComponent implements OnInit, DoCheck {
+export class ShipDetailsHeaderComponent implements OnInit {
   @Input() ship: Starship;
   @Input() isDetailsPage: boolean;
   isToggled: boolean = true;
@@ -21,11 +22,10 @@ export class ShipDetailsHeaderComponent implements OnInit, DoCheck {
   peopleNames: String[] = [];
 
   constructor(private shipService: ShipsService) { }
-  ngDoCheck(): void {
-  }
 
   ngOnInit(): void {
     if (this.isDetailsPage) {
+
       this.getFilms();
       this.getPilots();
     }
@@ -52,7 +52,6 @@ export class ShipDetailsHeaderComponent implements OnInit, DoCheck {
   }
 
   updateUrl() {
-    console.log(this.ship)
     this.ship.img = "assets/nostarships.png";
   }
 
@@ -72,7 +71,9 @@ export class ShipDetailsHeaderComponent implements OnInit, DoCheck {
   }
 
   private parseResponse(url: String, type: requestType) {
+
     this.shipService.getStarship(url)
+      .pipe(take(1))
       .subscribe(
         data => {
           if (type === requestType.film) {

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit, DoCheck } from '@angular/core';
 import { Starship } from 'app/models/starship';
-import { devLog } from 'app/core/functions/development_logs';
 import { Router } from '@angular/router';
 
 @Component({

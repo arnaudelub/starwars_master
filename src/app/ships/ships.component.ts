@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ShipsService } from './ships.service';
-import { Observable, Subject, fromEvent } from 'rxjs';
+import { Observable, Subject, fromEvent, merge } from 'rxjs';
 import { SwapiResponse } from '../models/starship';
 import { Router, UrlTree, Navigation, RouterStateSnapshot, NavigationEnd } from '@angular/router';
 import { devLog } from 'app/core/functions/development_logs';
-import { takeUntil, map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { takeUntil, map, debounceTime, distinctUntilChanged, take, mergeMap, skip, mapTo } from 'rxjs/operators';
 
 import { showInputAnimation } from '../core/animations/show_input_animation';
 @Component({
@@ -17,11 +17,15 @@ import { showInputAnimation } from '../core/animations/show_input_animation';
   ]
 })
 
-export class ShipsComponent implements OnInit, OnDestroy, AfterViewInit {
-  private inputSubject: Subject<String> = new Subject();
+export class ShipsComponent implements OnInit, AfterViewInit, OnDestroy {
   protected starships$: Observable<SwapiResponse>;
+
+  private inputSubject: Subject<String> = new Subject();
+  private updated$ = new Subject();
   private currentRoute = "/starships";
   private destroyed$: Subject<boolean> = new Subject();
+
+  public notificationToggle$: Observable<boolean>;
   public navigateTo: "/starships/me" | "/starships" = "/starships/me";
   public iconImage: "assets/stormtrooper.png" | "assets/close.png" = "assets/stormtrooper.png";
   public showSearchBar = true;
@@ -36,9 +40,49 @@ export class ShipsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
   ngAfterViewInit(): void {
+    this.subscribeToInputSubject();
+  }
+
+  ngOnInit(): void {
+    this.subscribeToRouterEvents();
+
+    const shipsAtFirstLoad = this.getShipsOnce();
+
+    const updates$ = this.updated$.pipe(
+      mergeMap(() => this.getShipsOnce())
+    );
+
+    this.starships$ = this.getShipsOnce();
+
+    const firstNofication$ = this.shipsService.ships.pipe(skip(1)) // We don't want to notify at first load => skip(1)
+
+    const open$ = firstNofication$.pipe(mapTo(true));
+    const close$ = this.updated$.pipe(mapTo(false));
+    this.notificationToggle$ = merge(open$, close$);
+
+  }
+
+  private subscribeToRouterEvents() {
+    this.router.events.pipe(
+      takeUntil(this.destroyed$) // to avoid memory leak
+    ).subscribe(
+      state => {
+        if (state instanceof NavigationEnd) {
+          this.currentRoute = state.url;
+          this.setFromRoute();
+
+        }
+      }, err => { },
+      () => {
+        devLog("Router subsciption completed");
+      }
+    )
+  }
+
+  private subscribeToInputSubject() {
     this.inputSubject
       .pipe(takeUntil(this.destroyed$))
-      .pipe(debounceTime(1000))
+      .pipe(debounceTime(999))
       .pipe(distinctUntilChanged())
       .subscribe(
         data => {
@@ -48,35 +92,15 @@ export class ShipsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           this.isSearchResult = true;
-          this.starships$ = this.shipsService.getStarshipSearch(data);
+          this.starships$ = this.shipsService.getStarshipSearch(data).pipe(take(1));
         },
         err => { },
         () => console.log("complete")
       );
   }
 
-  ngOnInit(): void {
-    this.router.events.pipe(
-      takeUntil(this.destroyed$) // to avoid memory leak
-    ).subscribe(
-      state => {
-        if (state instanceof NavigationEnd) {
-          this.currentRoute = state.url;
-          this.setFromRoute();
-          devLog(state.url);
-
-        }
-      }, err => { },
-      () => {
-        devLog("Router subsciption completed");
-      }
-    )
-    this.starships$ = this.shipsService.getStarship();
-  }
-
-  getStarshipsAtPage(url: String) {
-    console.log("Loading url: ", url)
-    this.starships$ = this.shipsService.getStarship(url);
+  private getShipsOnce() {
+    return this.shipsService.getStarship().pipe(take(1));
   }
 
   setFromRoute() {
@@ -113,6 +137,10 @@ export class ShipsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.router.navigate([this.navigateTo]);
     }
+  }
+
+  updateList() {
+    this.updated$.next();
   }
 
   ngOnDestroy(): void {
