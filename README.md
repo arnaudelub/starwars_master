@@ -191,6 +191,10 @@ This project can be found here just in case you have any trouble using ng serve:
   
 Also, the argument **{ useHash}: true** has been add to RouterModule.forRoot i'm using lighttpd for my web server, so .htaccess is not available.
 
+## **!CAUTION**
+
+For demonstration purposes, **ShipsComponent** is calling the API every 10 seconds. Do not leave the page opened once done otherwise the API
+may return an **ERROR 429: TOO MANY REQUESTS**
 
 
 
