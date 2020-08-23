@@ -1,0 +1,60 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.ship-details__header__img {
+  width: 100%;
+}
+.ship-details__header__info {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+.ship-details__header__info__name {
+  font-weight: 500;
+}
+.ship-details__header__info__credits {
+  font-weight: 700;
+}
+.ship-details__header__info__details__title {
+  font-weight: 400;
+  display: block;
+  text-align: center;
+}
+.ship-details__header__info__details__name {
+  font-weight: 600;
+}
+.ship-details__header__info__details__toggle_container {
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+}
+.ship-details__header .first-node {
+  list-style-type: square;
+}
+.ship-details__header .second-node {
+  list-style-type: disc;
+  padding-left: 10px;
+}
+
+.centered {
+  align-items: center;
+}
+
+@media screen and (min-width: 1025px) {
+  .in-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .in-row .ship-details__header__img {
+    width: 50%;
+  }
+  .in-row .ship-details__header__info {
+    padding: 0;
+  }
+}

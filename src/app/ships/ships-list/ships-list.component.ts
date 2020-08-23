@@ -28,7 +28,7 @@ export class ShipsListComponent implements OnInit {
     this.nextPage = this.swapiResponse.next;
   }
 
-  mapResponseWithIdAndImage(response: Starship[]) {
+  private mapResponseWithIdAndImage(response: Starship[]) {
     return this.swapiResponse.results.map(
       (item, index) => {
         devLog(item);

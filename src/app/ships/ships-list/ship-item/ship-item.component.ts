@@ -16,13 +16,6 @@ export class ShipItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updateUrl() {
-    this.ship.img = "assets/nostarships.png";
-  }
-
-  priceIsUnknown() {
-    return this.ship.cost_in_credits === 'unknown';
-  }
 
   showDetails() {
     // Passing the data object using the url

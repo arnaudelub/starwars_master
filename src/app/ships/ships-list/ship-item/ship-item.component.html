@@ -1,14 +1,5 @@
 <div (click)="showDetails()" class="ship-item">
-  <img [src]="ship.img" alt="" (error)="updateUrl()" width="100%" />
-  <div class="ship-item__info">
-    <span class="ship-item__info__name"> {{ ship.name }} </span><br />
-    <span
-      class="ship-item__info__credits"
-      *ngIf="!priceIsUnknown(); else noPrice"
-      >{{ ship.cost_in_credits }} <img src="assets/credit.png" alt="" />
-    </span>
-
-    <ng-template #noPrice>Contact us to know the price in credits!</ng-template>
-  </div>
+  <app-ship-details-header [ship]="ship" [isDetailsPage]="false">
+  </app-ship-details-header>
 </div>
 <div class="vspacer"></div>

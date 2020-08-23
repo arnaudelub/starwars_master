@@ -21,7 +21,12 @@ var ShipDetailsComponent = /** @class */ (function () {
         var _this = this;
         var id = +this.route.snapshot.paramMap.get('id');
         this.shipService.getStarshipDetails(id)
-            .subscribe(function (ship) { return _this.ship = ship; });
+            .subscribe(function (ship) { return _this.ship = ship; }, function (err) { return null; }, function () { return _this.addImage(); });
+    };
+    ShipDetailsComponent.prototype.addImage = function () {
+        var splittedUrl = this.ship.url.split("/");
+        this.ship.id = +splittedUrl[splittedUrl.length - 2];
+        this.ship.img = "https://starwars-visualguide.com/assets/img/starships/" + this.ship.id + ".jpg";
     };
     ShipDetailsComponent = __decorate([
         core_1.Component({

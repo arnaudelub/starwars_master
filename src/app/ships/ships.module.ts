@@ -7,6 +7,7 @@ import { ShipItemComponent } from './ships-list/ship-item/ship-item.component';
 import { ShipDetailsComponent } from './ship-details/ship-details.component';
 import { MeComponent } from './me/me.component';
 import { FormsModule } from '@angular/forms';
+import { ShipDetailsHeaderComponent } from './components/ship-details-header/ship-details-header.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     ShipItemComponent,
     ShipDetailsComponent,
     MeComponent,
+    ShipDetailsHeaderComponent,
   ],
   imports: [
     CommonModule,

@@ -6,8 +6,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ShipsService {
+  uri = `${environment.swapiUrl}`;
   baseUrl = `${environment.swapiUrl}starships/`;
-  constructor(private http: HttpClient) { }
+  endpoint: 'starships' | 'people' | 'films' = 'starships';
+  constructor(private http: HttpClient) {
+  }
+
+  setEndpoint(endpoint: 'starships' | 'people' | 'films' = 'starships') {
+    this.baseUrl = `${this.uri}${endpoint}/`;
+  }
 
   getStarship(url?) {
     if (!url) {

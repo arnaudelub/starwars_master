@@ -1,0 +1,8 @@
+@import '../../../stylings/config';
+
+@include media-lg {
+    .ship-details {
+        width : 1024px;
+        margin: auto;
+    }
+}

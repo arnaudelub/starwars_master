@@ -1,0 +1,114 @@
+<div class="ship-details__header" [ngClass]="{ 'in-row': isDetailsPage }">
+  <img
+    class="ship-details__header__img"
+    [src]="ship.img"
+    (error)="updateUrl()"
+    alt="picture"
+    [title]="ship.name"
+  />
+  <div
+    class="ship-details__header__info"
+    [ngClass]="{ centered: isDetailsPage }"
+  >
+    <span class="ship-details__header__info__name"> {{ ship.name }} </span>
+    <span
+      class="ship-details__header__info__credits"
+      *ngIf="!priceIsUnknown(); else noPrice"
+      >{{ ship.cost_in_credits }} <img src="assets/credit.png" alt="" />
+    </span>
+
+    <ng-template #noPrice>Contact us to know the price in credits!</ng-template>
+    <ng-container *ngIf="isDetailsPage">
+      <div class="vspacer"></div>
+      <div class="ship-details__header__info__details">
+        <div
+          class="ship-details__header__info__details__toggle_container"
+          (click)="toggleDetails()"
+        >
+          <span class="ship-details__header__info__details__title"
+            >Details</span
+          >
+          <span class="ship-details__header__info__details__toggle">
+            {{ toggleSymbole }}
+          </span>
+        </div>
+        <div class="vspacer"></div>
+        <div [@openClose]="isToggled ? 'open' : 'closed'">
+          <ul class="first-node">
+            <li>
+              <span class="ship-details__header__info__details__name"
+                >Models: </span
+              >{{ ship.model }}
+            </li>
+            <li>
+              <span class="ship-details__header__info__details__name"
+                >Manufacturer: </span
+              >{{ ship.manufacturer }}
+            </li>
+            <li>
+              <span class="ship-details__header__info__details__name"
+                >Length: </span
+              >{{ ship.length }}
+            </li>
+            <li>
+              <span class="ship-details__header__info__details__name"
+                >Max Speed: </span
+              >{{ ship.max_atmosphering_speed }}
+            </li>
+            <li>
+              <span class="ship-details__header__info__details__name"
+                >Crew: </span
+              >{{ ship.crew }}
+            </li>
+            <li>
+              <span class="ship-details__header__info__details__name"
+                >Passengers: </span
+              >{{ ship.passengers }}
+            </li>
+            <li>
+              <span class="ship-details__header__info__details__name"
+                >Capacity: </span
+              >{{ ship.cargo_capacity }}
+            </li>
+            <li>
+              <span class="ship-details__header__info__details__name"
+                >Consumable: </span
+              >{{ ship.consumables }}
+            </li>
+            <li>
+              <span class="ship-details__header__info__details__name"
+                >Hyperdrive rate: </span
+              >{{ ship.hyperdrive_rating }}
+            </li>
+            <li>
+              <span class="ship-details__header__info__details__name"
+                >Max Megalights: </span
+              >{{ ship.MGLT }}
+            </li>
+            <li>
+              <span class="ship-details__header__info__details__name"
+                >Class: </span
+              >{{ ship.starship_class }}
+            </li>
+            <li *ngIf="ship.pilots.length > 0">
+              <span class="ship-details__header__info__details__name"
+                >Pilots:
+              </span>
+              <ul class="second-node" *ngFor="let pilot of peopleNames">
+                <li>{{ pilot }}</li>
+              </ul>
+            </li>
+            <li *ngIf="ship.films.length > 0">
+              <span class="ship-details__header__info__details__name"
+                >Films:
+              </span>
+              <ul class="second-node" *ngFor="let film of filmNames">
+                <li>{{ film }}</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

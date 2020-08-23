@@ -65,7 +65,7 @@
     </div>
   </ng-container>
 </ng-container>
-<ng-template #loader>
+<ng-template #loader *ngIf="isShipListRoute()">
   <div class="loader-container">
     <div class="spinner-border loader" role="status">
       <span class="sr-only">Loading...</span>

@@ -14,12 +14,6 @@ var ShipItemComponent = /** @class */ (function () {
     }
     ShipItemComponent.prototype.ngOnInit = function () {
     };
-    ShipItemComponent.prototype.updateUrl = function () {
-        this.ship.img = "assets/nostarships.png";
-    };
-    ShipItemComponent.prototype.priceIsUnknown = function () {
-        return this.ship.cost_in_credits === 'unknown';
-    };
     ShipItemComponent.prototype.showDetails = function () {
         // Passing the data object using the url
         this.router.navigate(["starships/details/", this.ship.id]);

@@ -13,8 +13,14 @@ var http_1 = require("@angular/common/http");
 var ShipsService = /** @class */ (function () {
     function ShipsService(http) {
         this.http = http;
+        this.uri = "" + environment_1.environment.swapiUrl;
         this.baseUrl = environment_1.environment.swapiUrl + "starships/";
+        this.endpoint = 'starships';
     }
+    ShipsService.prototype.setEndpoint = function (endpoint) {
+        if (endpoint === void 0) { endpoint = 'starships'; }
+        this.baseUrl = "" + this.uri + endpoint + "/";
+    };
     ShipsService.prototype.getStarship = function (url) {
         if (!url) {
             url = this.baseUrl;

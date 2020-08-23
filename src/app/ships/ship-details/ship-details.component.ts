@@ -25,9 +25,14 @@ export class ShipDetailsComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.shipService.getStarshipDetails(id)
       .subscribe(
-        ship => this.ship = ship
+        ship => this.ship = ship,
+        err => null,
+        () => this.addImage()
       );
   }
-
-
+  private addImage() {
+    let splittedUrl = this.ship.url.split("/");
+    this.ship.id = +splittedUrl[splittedUrl.length - 2];
+    this.ship.img = `https://starwars-visualguide.com/assets/img/starships/${this.ship.id}.jpg`
+  }
 }

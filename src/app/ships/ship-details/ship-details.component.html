@@ -1,1 +1,6 @@
-{{ ship | json }}
+<div class="ship-details" *ngIf="ship">
+  <app-ship-details-header
+    [ship]="ship"
+    [isDetailsPage]="true"
+  ></app-ship-details-header>
+</div>

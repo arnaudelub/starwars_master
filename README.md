@@ -28,6 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 # Development
 
+FYI: **Swapi url** is not ~~swapi.co~~ anymore, it's https://swapi.dev
 ## Local Environment
 
 ```
@@ -89,7 +90,7 @@ my first step was to generate the project structure using _Angular CLI_:
 My first doubt was whether to choose reactive form using formControl or template driven form using ngModel for the login and register page.
 As Reactive form is much more flexible once written and as the register form may evolve during time, i thought it was the best choice.
 While coding the login template and not knowing if i should go with angular-material, bootsrap, ionic,... for the design, i've decided to go
-for the modernizing point of the **README** and make it close to Massimo Dutti's page
+for the modernizing point of the **README** and make it close to Massimo Dutti's design.
 
 To mock the backend responses, i'm using HttpInterceptor so auth.service can be use the same way whether we are in development or production
 
@@ -120,8 +121,8 @@ so we just need to replace http with https in **ships.service.js**:
 
 #### Handling the Observables
 
-_HttpClient get_ method is returning an observable, the be able to threat the response as an array of ships directly in **shipComponent**,
-i'm using the [async pipe](https://angular.io/api/common/AsyncPipe) in **shipsListComponent** input. The _async pipe_ will subscribe automatically to the Observable and return the latest value received.
+_HttpClient get_ method is returning an observable, the be able to treat the response as an array of ships directly in **shipComponent**,
+i'm using the [async pipe](https://angular.io/api/common/AsyncPipe) in **shipsComponent template**. The _async pipe_ will subscribe automatically to the Observable and return the latest value received.
 This way, i can manipulate the ships array (ships[]) without having to subscribe to it from the component.
 
 #### Creation of the Ship's list
